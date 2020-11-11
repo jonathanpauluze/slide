@@ -10,6 +10,7 @@ export class Slide {
       movement: 0,
     }
     this.activeClass = 'active';
+    this.changeSlideEvent = new Event('changeSlideEvent');
   }
 
   updatePosition(clientX) {
@@ -108,6 +109,7 @@ export class Slide {
     this.slidesIndexNav(index);
     this.dist.finalPosition = activeSlide.position;
     this.changeActiveClass();
+    this.container.dispatchEvent(this.changeSlideEvent);
   }
 
   changeActiveClass() {
@@ -156,6 +158,11 @@ export class Slide {
 }
 
 export class SlideNav extends Slide {
+  constructor(container, wrapper) {
+    super(container, wrapper);
+    this.bindDotsEvents();
+  }
+
   addArrow({ prevElement, nextElement }) {
     this.prevElement = document.querySelector(prevElement);
     this.nextElement = document.querySelector(nextElement);
@@ -167,5 +174,44 @@ export class SlideNav extends Slide {
     this.nextElement.addEventListener('click', this.activeNextSlide);
   }
 
+  createDots() {
+    const dots = document.createElement('ul');
+    dots.dataset.control = 'slide';
 
+    this.slideArray.forEach((item, index) => {
+      dots.innerHTML += /*html*/ `<li><a href="#slide${index+1}">${index+1}</a></li>`;
+    });
+
+    this.container.appendChild(dots);
+
+    return dots;
+  }
+
+  eventDot(item, index) {
+    item.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      this.changeSlide(index);
+      this.activeDotItem();
+    });
+    this.container.addEventListener('changeSlideEvent', this.activeDotItem);
+  }
+
+  activeDotItem() {
+    this.dotsArray.forEach(item => item.classList.remove(this.activeClass));
+    this.dotsArray[this.index.active].classList.add(this.activeClass);
+  }
+
+  addDots(customDots) {
+    this.dots = document.querySelector(customDots) || this.createDots();
+    this.dotsArray = [...this.dots.children];
+
+    this.activeDotItem();
+    this.dotsArray.forEach(this.eventDot);
+  }
+
+  bindDotsEvents() {
+    this.eventDot = this.eventDot.bind(this);
+    this.activeDotItem = this.activeDotItem.bind(this);
+  }
 }

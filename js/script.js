@@ -11,3 +11,4 @@ slideNav.addArrow({
   prevElement: '.prev',
   nextElement: '.next'
 });
+slideNav.addDots();
