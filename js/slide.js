@@ -1,6 +1,6 @@
 import debounce from './debounce.js';
 
-export default class Slide {
+export class Slide {
   constructor({ container, wrapper }) {
     this.container = document.querySelector(container);
     this.wrapper = document.querySelector(wrapper);
@@ -124,7 +124,6 @@ export default class Slide {
   }
 
   onResize() {
-    console.log('teste');
     setTimeout(() => {
       this.slidesConfig();
       this.changeSlide(this.index.active);
@@ -140,16 +139,33 @@ export default class Slide {
     this.onMove = this.onMove.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.onResize = this.onResize.bind(this);
+    this.activePrevSlide = this.activePrevSlide.bind(this);
+    this.activeNextSlide = this.activeNextSlide.bind(this);
   }
 
   init() {
     this.bindEvents();
     this.addSlideEvents();
     this.slidesConfig();
-    this.changeSlide(5);
+    this.changeSlide(0);
     this.transition(true);
     this.addResizeEvent();
 
     return this;
   }
+}
+
+export class SlideNav extends Slide {
+  addArrow({ prevElement, nextElement }) {
+    this.prevElement = document.querySelector(prevElement);
+    this.nextElement = document.querySelector(nextElement);
+    this.addArrowEvents();
+  }
+
+  addArrowEvents() {
+    this.prevElement.addEventListener('click', this.activePrevSlide);
+    this.nextElement.addEventListener('click', this.activeNextSlide);
+  }
+
+
 }
