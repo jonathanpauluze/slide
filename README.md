@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align="center"> 
-	A slide made with Valinna JavaScript
+	A slide made with Vanilla JavaScript
 </h4>
 
 ## :information_source: About the project
