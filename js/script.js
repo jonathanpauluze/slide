@@ -1,4 +1,4 @@
-import { SlideNav } from './slide.js';
+import SlideNav from './slide.js';
 
 const slideNav = new SlideNav({
   container: '.slide-container',
@@ -11,4 +11,4 @@ slideNav.addArrow({
   prevElement: '.prev',
   nextElement: '.next'
 });
-slideNav.addDots();
+slideNav.addDots('.custom-dots');

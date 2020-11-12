@@ -15,6 +15,7 @@ img {
 
 /* Slide */
 .slide-container {
+  position: relative;
   overflow: hidden;
 }
 
@@ -65,4 +66,54 @@ img {
 [data-control="slide"] li.active a,
 [data-control="slide"] li a:hover {
   background-color: #e54;
+}
+
+.custom-dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.custom-dots li {
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  border-radius: 50%;
+  opacity: .8;
+  transform: scale(.8);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.custom-dots li.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.arrow-nav button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background: #fb4 url('../img/arrow.svg') center center no-repeat;
+  cursor: pointer;
+}
+
+.arrow-nav button.prev {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  transform: translate3d(0, -50%, 0) rotate(180deg);
+}
+
+.arrow-nav button.next {
+  position: absolute;
+  top: 50%;
+  right: 15%;
+  transform: translate3d(0, -50%, 0);
 }
